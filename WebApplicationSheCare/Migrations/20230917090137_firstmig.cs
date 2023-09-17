@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace WebApplicationSheCare.Migrations
 {
     /// <inheritdoc />
-    public partial class ApplicationUersMig : Migration
+    public partial class firstmig : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -18,8 +18,11 @@ namespace WebApplicationSheCare.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    dob = table.Column<DateOnly>(type: "date", nullable: false),
-                    ModifiedDate = table.Column<DateOnly>(type: "date", nullable: true)
+                    dob = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Phone = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>
                 {

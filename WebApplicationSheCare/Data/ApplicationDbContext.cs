@@ -9,21 +9,6 @@ namespace WebApplicationSheCare.Data
         {
             
         }
-
         public DbSet<AppUser> AppUsers { get; set; }
-
-
-        protected override void ConfigureConventions(ModelConfigurationBuilder builder)
-        {
-
-            builder.Properties<DateOnly>()
-                .HaveConversion<DateOnlyConverter>()
-                .HaveColumnType("date");
-
-            base.ConfigureConventions(builder);
-
-        }
-
-
     }
 }

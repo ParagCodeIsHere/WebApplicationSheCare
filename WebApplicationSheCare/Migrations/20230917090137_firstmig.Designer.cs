@@ -12,8 +12,8 @@ using WebApplicationSheCare.Data;
 namespace WebApplicationSheCare.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230827100509_ApplicationUersMig")]
-    partial class ApplicationUersMig
+    [Migration("20230917090137_firstmig")]
+    partial class firstmig
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -33,12 +33,23 @@ namespace WebApplicationSheCare.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime?>("ModifiedDate")
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("ModifiedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("Phone")
+                        .HasColumnType("bigint");
 
                     b.Property<DateTime>("dob")
                         .HasColumnType("datetime2");

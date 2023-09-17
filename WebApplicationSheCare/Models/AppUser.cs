@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace WebApplicationSheCare.Models
 {
@@ -8,10 +9,14 @@ namespace WebApplicationSheCare.Models
         public int Id { get; set; }
         [Required]
         public string Name { get; set; }
+        [Display (Name= "Date Of Birth")]
+        public DateTime dob { get; set; }
+        [Display(Name = "Last Period On")]
+        public DateTime ModifiedDate { get; set;}
         [Required]
-        public DateOnly dob { get; set; }
-        public DateOnly? ModifiedDate { get; set;}
-        
-
+        public string Email { get; set; }
+        [Required]
+        public string Password { get; set; }
+        public Int64 Phone { get; set; }
     }
 }
