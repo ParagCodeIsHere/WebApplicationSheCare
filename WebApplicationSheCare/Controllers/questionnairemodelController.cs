@@ -12,7 +12,7 @@ namespace WebApplicationSheCare.Controllers
         {
             _context = context;
         }
-
+        //suggetion branch check
         public IActionResult GetSuggetions() { 
             questionnairemodel model = new questionnairemodel();
             model.UserId = 1;
