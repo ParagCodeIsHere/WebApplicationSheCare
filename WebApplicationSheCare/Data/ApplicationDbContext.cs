@@ -11,5 +11,6 @@ namespace WebApplicationSheCare.Data
             
         }
         public DbSet<AppUser> AppUsers { get; set; }
+        public DbSet<questionnairemodel> Suggetions{ get; set; }
     }
 }
