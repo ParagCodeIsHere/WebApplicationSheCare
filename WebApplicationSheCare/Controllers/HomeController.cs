@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 using WebApplicationSheCare.Data;
@@ -30,13 +31,18 @@ namespace WebApplicationSheCare.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
-       public async Task<IActionResult> SuggetionIndexAsync()
+        public IActionResult SuggetionForm() {
+            return View();
+        }
+        [Authorize]
+        public async Task<IActionResult> SuggetionIndexAsync()
         {
             return _context.Suggetions != null ?
                           View(await _context.Suggetions.ToListAsync()) :
-                          Problem("Entity set 'ApplicationDbContext.AppUsers'  is null.");
+                          Problem("Entity set 'ApplicationDbContext.Suggetion'  is null.");
         }
-        public async Task<IActionResult> SuggetionAsync(int id=0)
+        [Authorize]
+        public async Task<IActionResult> SuggetionAsync(int id = 0)
         {
             Suggetion suggetion = new Suggetion();
             if (id != 0)
@@ -52,6 +58,7 @@ namespace WebApplicationSheCare.Controllers
             return View(suggetion);
         }
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> Suggetion(int id, [Bind("Id,Question,Answer")] Suggetion suggetion)
         {
             if (id != suggetion.Id)
@@ -82,6 +89,7 @@ namespace WebApplicationSheCare.Controllers
             }
             return View(suggetion);
         }
+        [Authorize]
         public async Task<IActionResult> DeleteSuggetion(int? id)
         {
             if (id == null || _context.Suggetions == null)
@@ -101,11 +109,12 @@ namespace WebApplicationSheCare.Controllers
         // POST: AppUsers/Delete/5
         [HttpPost, ActionName("DeleteSuggetion")]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> DeleteSuggetionConfirmed(int id)
         {
             if (_context.Suggetions == null)
             {
-                return Problem("Entity set 'ApplicationDbContext.AppUsers'  is null.");
+                return Problem("Entity set 'ApplicationDbContext.Suggetion'  is null.");
             }
             var suggetion = await _context.Suggetions.FindAsync(id);
             if (suggetion != null)
@@ -120,5 +129,6 @@ namespace WebApplicationSheCare.Controllers
         {
             return (_context.Suggetions?.Any(e => e.Id == id)).GetValueOrDefault();
         }
+
     }
 }

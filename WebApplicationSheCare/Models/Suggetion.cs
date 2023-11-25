@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations;
 
 namespace WebApplicationSheCare.Models
 {
@@ -10,5 +11,7 @@ namespace WebApplicationSheCare.Models
         public string Question { get; set; }
         [Required]
         public string Answer{ get; set; }
+        public ICollection<SelectedSuggetion> selectedSuggetions { get; set; } //entity navigation property
+
     }
 }

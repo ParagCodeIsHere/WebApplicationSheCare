@@ -2,9 +2,9 @@
 @{
     ViewBag.Title = "Register Yourself";
 }
-@* @section Css{
+@section Css{
     <link href="~/css/frontend/register_user.css" rel="stylesheet" />
-} *@
+}
 
 <section class="vh-100 gradient-custom">
     <div class="container py-5 h-100">
@@ -16,9 +16,9 @@
                         <form method="post">
                             <div asp-validation-summary="All" class="text-danger"></div>
                             <div class="row col-12">
-                                <label asp-for="Password" class="form-label select-label"></label>
+                                <label asp-for="Email" class="form-label select-label"></label>
                                 <input asp-for="Email" class="form-control-lg" />
-                                <span asp-validation-for="Password" class="alert-danger"></span>
+                                <span asp-validation-for="Email" class="alert-danger"></span>
                             </div>
                             <div class="row">
                                 <div class="col-md-6 mb-4 pb-2">

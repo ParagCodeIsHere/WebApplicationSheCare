@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebApplicationSheCare.Data;
 
@@ -11,9 +12,11 @@ using WebApplicationSheCare.Data;
 namespace WebApplicationSheCare.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231124143800_AddUserSuggetionTable")]
+    partial class AddUserSuggetionTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -228,20 +231,19 @@ namespace WebApplicationSheCare.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("WebApplicationSheCare.Models.SelectedSuggetion", b =>
+            modelBuilder.Entity("UserSuggetion", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)")
-                        .HasColumnName("UserId");
-
-                    b.Property<int>("SuggetionId")
+                    b.Property<int>("SuggetionsId")
                         .HasColumnType("int");
 
-                    b.HasKey("Id", "SuggetionId");
+                    b.Property<string>("UsersId")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.HasIndex("SuggetionId");
+                    b.HasKey("SuggetionsId", "UsersId");
 
-                    b.ToTable("selectedSuggetions");
+                    b.HasIndex("UsersId");
+
+                    b.ToTable("UserSuggetion");
                 });
 
             modelBuilder.Entity("WebApplicationSheCare.Models.Suggetion", b =>
@@ -326,33 +328,19 @@ namespace WebApplicationSheCare.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("WebApplicationSheCare.Models.SelectedSuggetion", b =>
+            modelBuilder.Entity("UserSuggetion", b =>
                 {
-                    b.HasOne("WebApplicationSheCare.Models.AppUser", "User")
-                        .WithMany("selectedSuggetions")
-                        .HasForeignKey("Id")
+                    b.HasOne("WebApplicationSheCare.Models.Suggetion", null)
+                        .WithMany()
+                        .HasForeignKey("SuggetionsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("WebApplicationSheCare.Models.Suggetion", "Suggetion")
-                        .WithMany("selectedSuggetions")
-                        .HasForeignKey("SuggetionId")
+                    b.HasOne("WebApplicationSheCare.Models.AppUser", null)
+                        .WithMany()
+                        .HasForeignKey("UsersId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Suggetion");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("WebApplicationSheCare.Models.Suggetion", b =>
-                {
-                    b.Navigation("selectedSuggetions");
-                });
-
-            modelBuilder.Entity("WebApplicationSheCare.Models.AppUser", b =>
-                {
-                    b.Navigation("selectedSuggetions");
                 });
 #pragma warning restore 612, 618
         }
