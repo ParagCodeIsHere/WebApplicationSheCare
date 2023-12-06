@@ -6,7 +6,7 @@ namespace WebApplicationSheCare.Models
     {
         public DateTime ModifiedDate { get; set;}
         
-        public ICollection<SelectedSuggetion> selectedSuggetions { get; set;} //entity navigation property
+        public IList<Suggetion> UserSuggetions { get; set;} //entity navigation property
         
     }
 }

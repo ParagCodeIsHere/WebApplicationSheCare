@@ -1,0 +1,22 @@
+﻿@model IList<Suggetion>;
+
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    var i = 0;
+}
+<form asp-controller="Suggetion" asp-action="CreateRequest" method="post">
+    @foreach (var item in Model)
+    {
+        <input name="suggetions[@i].Id" value="@item.Id
+        ">
+        <div class="my-2">
+            @item.Question
+            <input type="checkbox" name="suggetions[@i].IsActive">
+        </div>
+        i++;
+        
+    }
+    <button type="submit" >Click here</button>
+</form>

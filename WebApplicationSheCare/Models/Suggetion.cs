@@ -11,7 +11,8 @@ namespace WebApplicationSheCare.Models
         public string Question { get; set; }
         [Required]
         public string Answer{ get; set; }
-        public ICollection<SelectedSuggetion> selectedSuggetions { get; set; } //entity navigation property
+        public bool IsActive { get; set; }
+        //public ICollection<SelectedSuggetion> selectedSuggetions { get; set; } //entity navigation property
 
     }
 }
