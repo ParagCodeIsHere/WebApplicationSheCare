@@ -20,7 +20,7 @@ namespace WebApplicationSheCare.Controllers
         }
         public IActionResult Index()
         {
-            return View();
+            return View(_context.Myth.ToList());
         }
         public IActionResult Privacy()
         {

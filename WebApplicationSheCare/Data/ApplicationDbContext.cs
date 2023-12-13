@@ -11,6 +11,7 @@ namespace WebApplicationSheCare.Data
 
         }
         public DbSet<Suggetion> Suggetions { get; set; }
+        public DbSet<WebApplicationSheCare.Models.Myth>? Myth { get; set; }
         //public DbSet<SelectedSuggetion> selectedSuggetions { get; set; }
         //protected override void OnModelCreating(ModelBuilder modelBuilder)
         //{

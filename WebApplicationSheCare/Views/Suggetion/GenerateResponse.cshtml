@@ -1,21 +1,33 @@
 ﻿@model IList<Suggetion>;
 
-@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
 @{
     var i = 0;
 }
-@* <form asp-controller="Suggetion" asp-action="CreateRequest" method="post"> *@
+@section Css {
+    <link href="~/css/frontend/suggetionresponse.css" rel="stylesheet" />
+}
+
+
+<section class="articles">
+
     @foreach (var item in Model)
     {
-        @* <input name="suggetions[@i].Id" value="@item.Id
-        "> *@
-        <div class="my-2">
-            @item.Answer
-            @* <input type="checkbox" name="suggetions[@i].IsActive"> *@
-        </div>
+        if (item.Answer != null)
+        {
+            <article>
+                <div class="article-wrapper">
+                    <figure>
+                        <img src="https://i.ytimg.com/vi/6LhWBCL80Ro/maxresdefault.jpg" alt="" />
+                    </figure>
+                    <div class="article-body">
+                        <h2>@item.Label</h2>
+                        <p >
+                            @item.Answer
+                        </p>
+                    </div>
+                </div>
+            </article>
+        }
         i++;
-        
     }
-   
+</section>

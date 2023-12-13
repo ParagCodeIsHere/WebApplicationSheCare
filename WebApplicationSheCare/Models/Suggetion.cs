@@ -7,6 +7,7 @@ namespace WebApplicationSheCare.Models
     {
         [Key]
         public int Id { get; set; }
+        public string Label { get; set; }
         [Required]
         public string Question { get; set; }
         [Required]

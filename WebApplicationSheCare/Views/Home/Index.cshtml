@@ -1,8 +1,38 @@
-﻿@{
+﻿@model IList<Myth>;
+@{
+    var i = 0;
     ViewData["Title"] = "Home Page";
+}
+
+@section Css {
+    <link href="~/css/frontend/suggetionresponse.css" rel="stylesheet" />
 }
 
 <div class="text-center">
     <h1 class="display-4">She Care</h1>
 
 </div>
+
+<section class="articles">
+
+    @foreach (var item in Model)
+    {
+        if (item.Text != null)
+        {
+            <article>
+                <div class="article-wrapper">
+                    <figure>
+                        <img src="https://flagency.net/wp-content/uploads/2022/02/shutterstock_2041488161-scaled.jpg" alt="" />
+                    </figure>
+                    <div class="article-body">
+                        <h2>@item.Name</h2>
+                        <p>
+                            @item.Text
+                        </p>
+                    </div>
+                </div>
+            </article>
+        }
+        i++;
+    }
+</section>

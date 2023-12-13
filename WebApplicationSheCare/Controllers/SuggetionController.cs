@@ -54,22 +54,12 @@ namespace WebApplicationSheCare.Controllers
                         _context.Suggetions.FirstOrDefault(t => t.Id == suggetion.Id);
                         suggetions1.Add(response);
                     }
-
-                    //var blogs = from b in _context.Suggetions
-                    //            where b.Id == suggetions[0].Id
-                    //            select b;
-                    //var blog = from b in suggetions1
-                    //           where b.IsActive == true
-                    //           select b;
-                    //suggetions = blog.ToList();
-                    //_user.UserSuggetions = blog.ToList();
-
                 }
                 return View("GenerateResponse", suggetions1);
             }
             catch
             {
-                return View();
+                return View(suggetions);
             }
         }
 
