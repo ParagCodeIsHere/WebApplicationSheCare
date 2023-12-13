@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebApplicationSheCare.Data;
 
@@ -11,9 +12,11 @@ using WebApplicationSheCare.Data;
 namespace WebApplicationSheCare.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231125084251_try")]
+    partial class @try
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -86,6 +89,10 @@ namespace WebApplicationSheCare.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Email")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
@@ -137,6 +144,10 @@ namespace WebApplicationSheCare.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("IdentityUser");
+
+                    b.UseTphMappingStrategy();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -220,25 +231,20 @@ namespace WebApplicationSheCare.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("WebApplicationSheCare.Models.Myth", b =>
+            modelBuilder.Entity("WebApplicationSheCare.Models.SelectedSuggetion", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)")
+                        .HasColumnName("UserId");
+
+                    b.Property<int>("SuggetionId")
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    b.HasKey("Id", "SuggetionId");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.HasIndex("SuggetionId");
 
-                    b.Property<string>("Text")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Myth");
+                    b.ToTable("selectedSuggetions");
                 });
 
             modelBuilder.Entity("WebApplicationSheCare.Models.Suggetion", b =>
@@ -253,13 +259,6 @@ namespace WebApplicationSheCare.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Label")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Question")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -267,6 +266,16 @@ namespace WebApplicationSheCare.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Suggetions");
+                });
+
+            modelBuilder.Entity("WebApplicationSheCare.Models.AppUser", b =>
+                {
+                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
+
+                    b.Property<DateTime>("ModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasDiscriminator().HasValue("AppUser");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -318,6 +327,35 @@ namespace WebApplicationSheCare.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("WebApplicationSheCare.Models.SelectedSuggetion", b =>
+                {
+                    b.HasOne("WebApplicationSheCare.Models.AppUser", "User")
+                        .WithMany("selectedSuggetions")
+                        .HasForeignKey("Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("WebApplicationSheCare.Models.Suggetion", "Suggetion")
+                        .WithMany("selectedSuggetions")
+                        .HasForeignKey("SuggetionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Suggetion");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("WebApplicationSheCare.Models.Suggetion", b =>
+                {
+                    b.Navigation("selectedSuggetions");
+                });
+
+            modelBuilder.Entity("WebApplicationSheCare.Models.AppUser", b =>
+                {
+                    b.Navigation("selectedSuggetions");
                 });
 #pragma warning restore 612, 618
         }

@@ -1,0 +1,24 @@
+﻿@model Suggetion
+@{
+    ViewData["Title"] = "Suggetion";
+}
+
+<div asp-validation-summary="All" class="text-danger">
+</div>
+<div class="row d-flex justify-content-center">
+    <div class="col-4">
+        <form asp-controller="Home" asp-action="Suggetion" class="form-control" method="post">
+            <input type="hidden" asp-for="Id">
+
+            <label asp-for="Question" class="form-control"></label>
+            <input asp-for="Question">
+            <span asp-validation-for="Question"></span>
+
+            <label asp-for="Answer" class="form-control"></label>
+            <input asp-for="Answer">
+            <span asp-validation-for="Answer"></span>
+
+            <button type="submit">@(Model.Id==0?"Create":"Update")</button>
+        </form>
+    </div>
+</div>

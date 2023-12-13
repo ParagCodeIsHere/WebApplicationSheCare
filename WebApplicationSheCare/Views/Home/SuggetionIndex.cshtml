@@ -1,0 +1,49 @@
+﻿@model IEnumerable<Suggetion>
+
+@{
+    ViewData["Title"] = "Suggetion Index";
+    var status = ViewBag.Status;
+}
+
+<h1>Suggetion Index</h1>
+
+<p>
+    <a asp-action="Suggetion">Create New</a>
+</p>
+<p>
+    <a asp-action="SuggetionForm">Browse Form</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Question)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Answer)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Question)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Answer)
+                </td>
+               <td>
+                    <a asp-action="Suggetion" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="DeleteSuggetion" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+@section Scripts{
+    <script src="~/js/ref/suggetion.js" asp-append-version="true"></script>
+    
+}

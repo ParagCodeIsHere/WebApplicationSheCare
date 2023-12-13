@@ -10,87 +10,87 @@ using WebApplicationSheCare.Models;
 
 namespace WebApplicationSheCare.Controllers
 {
-    public class AppUsersController : Controller
+    public class MythsController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public AppUsersController(ApplicationDbContext context)
+        public MythsController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: AppUsers
+        // GET: Myths
         public async Task<IActionResult> Index()
         {
-              return _context.AppUsers != null ? 
-                          View(await _context.AppUsers.ToListAsync()) :
-                          Problem("Entity set 'ApplicationDbContext.AppUsers'  is null.");
+              return _context.Myth != null ? 
+                          View(await _context.Myth.ToListAsync()) :
+                          Problem("Entity set 'ApplicationDbContext.Myth'  is null.");
         }
 
-        // GET: AppUsers/Details/5
+        // GET: Myths/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.AppUsers == null)
+            if (id == null || _context.Myth == null)
             {
                 return NotFound();
             }
 
-            var appUser = await _context.AppUsers
+            var myth = await _context.Myth
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (appUser == null)
+            if (myth == null)
             {
                 return NotFound();
             }
 
-            return View(appUser);
+            return View(myth);
         }
 
-        // GET: AppUsers/Create
+        // GET: Myths/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: AppUsers/Create
+        // POST: Myths/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,dob,ModifiedDate,Email,Password,Phone")] AppUser appUser)
+        public async Task<IActionResult> Create([Bind("Id,Name,Text")] Myth myth)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(appUser);
+                _context.Add(myth);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(appUser);
+            return View(myth);
         }
 
-        // GET: AppUsers/Edit/5
+        // GET: Myths/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.AppUsers == null)
+            if (id == null || _context.Myth == null)
             {
                 return NotFound();
             }
 
-            var appUser = await _context.AppUsers.FindAsync(id);
-            if (appUser == null)
+            var myth = await _context.Myth.FindAsync(id);
+            if (myth == null)
             {
                 return NotFound();
             }
-            return View(appUser);
+            return View(myth);
         }
 
-        // POST: AppUsers/Edit/5
+        // POST: Myths/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,dob,ModifiedDate,Email,Password,Phone")] AppUser appUser)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Text")] Myth myth)
         {
-            if (id != appUser.Id)
+            if (id != myth.Id)
             {
                 return NotFound();
             }
@@ -99,12 +99,12 @@ namespace WebApplicationSheCare.Controllers
             {
                 try
                 {
-                    _context.Update(appUser);
+                    _context.Update(myth);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!AppUserExists(appUser.Id))
+                    if (!MythExists(myth.Id))
                     {
                         return NotFound();
                     }
@@ -115,49 +115,49 @@ namespace WebApplicationSheCare.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(appUser);
+            return View(myth);
         }
 
-        // GET: AppUsers/Delete/5
+        // GET: Myths/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.AppUsers == null)
+            if (id == null || _context.Myth == null)
             {
                 return NotFound();
             }
 
-            var appUser = await _context.AppUsers
+            var myth = await _context.Myth
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (appUser == null)
+            if (myth == null)
             {
                 return NotFound();
             }
 
-            return View(appUser);
+            return View(myth);
         }
 
-        // POST: AppUsers/Delete/5
+        // POST: Myths/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.AppUsers == null)
+            if (_context.Myth == null)
             {
-                return Problem("Entity set 'ApplicationDbContext.AppUsers'  is null.");
+                return Problem("Entity set 'ApplicationDbContext.Myth'  is null.");
             }
-            var appUser = await _context.AppUsers.FindAsync(id);
-            if (appUser != null)
+            var myth = await _context.Myth.FindAsync(id);
+            if (myth != null)
             {
-                _context.AppUsers.Remove(appUser);
+                _context.Myth.Remove(myth);
             }
             
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool AppUserExists(int id)
+        private bool MythExists(int id)
         {
-          return (_context.AppUsers?.Any(e => e.Id == id)).GetValueOrDefault();
+          return (_context.Myth?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }
