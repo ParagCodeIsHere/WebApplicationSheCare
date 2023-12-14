@@ -1,14 +1,14 @@
 ﻿@model IList<Suggetion>;
 
-@section Css{
+@section Css {
     <link href="~/css/frontend/suggetionrequest.css" rel="stylesheet" asp-append-version="true" />
 }
 
 <div class="display-1 mb-5">
     Suggestions
 </div>
-
-<form asp-controller="Suggetion" asp-action="CreateRequest" method="post">
+<label class="form-text my-4">Find your worries and mark the symptoms</label>
+<form asp-controller="Suggetions" asp-action="CreateRequest" method="post">
     <div id="form-div">
         <table id="table" class="table table-responsive table-hover table-bordered table-danger">
             <thead class="table-light">
@@ -39,5 +39,5 @@
         </table>
         <button type="submit" class="btn btn-primary sub_btn" display="block">Find Suggetion</button>
     </div>
-    
+
 </form>

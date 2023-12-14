@@ -7,7 +7,9 @@
     <link href="~/css/frontend/suggetionresponse.css" rel="stylesheet" />
 }
 
-
+<div class="display-6 text-center mb-2" style="background-color: beige;">
+    Your Personalized Report
+</div>
 <section class="articles">
 
     @foreach (var item in Model)
@@ -21,7 +23,7 @@
                     </figure>
                     <div class="article-body">
                         <h2>@item.Label</h2>
-                        <p >
+                        <p>
                             @item.Answer
                         </p>
                     </div>
