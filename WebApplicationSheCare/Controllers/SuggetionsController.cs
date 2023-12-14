@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -20,6 +21,7 @@ namespace WebApplicationSheCare.Controllers
         }
 
         // GET: Suggetions
+        [Authorize]
         public async Task<IActionResult> Index()
         {
               return _context.Suggetions != null ? 
@@ -158,6 +160,39 @@ namespace WebApplicationSheCare.Controllers
         private bool SuggetionExists(int id)
         {
           return (_context.Suggetions?.Any(e => e.Id == id)).GetValueOrDefault();
+        }
+        [Authorize]
+        public IActionResult CreateRequest()
+        {
+            //var suggetions = (ICollection<Suggetion>)_context.Suggetions;
+            return View(_context.Suggetions.ToList());
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult CreateRequest(IList<Suggetion> suggetions)
+        {
+            try
+            {
+                IList<Suggetion> suggetions1 = suggetions.ToList();
+                if (suggetions != null)
+                {
+                    var blog = from b in suggetions
+                               where b.IsActive == true
+                               select b;
+                    foreach (var suggetion in blog)
+                    {
+                        var response =
+                        _context.Suggetions.FirstOrDefault(t => t.Id == suggetion.Id);
+                        suggetions1.Add(response);
+                    }
+                }
+                return View("GenerateResponse", suggetions1);
+            }
+            catch
+            {
+                return View(suggetions);
+            }
         }
     }
 }
